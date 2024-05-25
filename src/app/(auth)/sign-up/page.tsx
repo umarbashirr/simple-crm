@@ -24,13 +24,13 @@ const Page = () => {
         <CardContent>
           <SignupForm />
         </CardContent>
-        <CardFooter className="text-sm">
+        <CardFooter className="text-sm  flex items-center justify-center">
           Already have an account?{" "}
           <Link
             href="/sign-in"
-            className="text-indigo-600 hover:text-indigo-500"
+            className="text-indigo-600 hover:text-indigo-500 ml-1"
           >
-            Sign-in
+            Sign in
           </Link>
         </CardFooter>
       </Card>
