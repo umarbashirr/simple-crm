@@ -24,8 +24,21 @@ const SignupForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+
+    try {
+      const response = await fetch("/api/auth/sign-up", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+
+      const data = response?.json();
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   }
   return (
     <Form {...form}>
