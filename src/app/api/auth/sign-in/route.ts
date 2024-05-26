@@ -4,9 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { connectMongo } from "@/config/connect-db";
 
 export async function POST(req: NextRequest) {
   try {
+    await connectMongo();
     const { email, password } = await req.json();
 
     if (!email || !password) {
