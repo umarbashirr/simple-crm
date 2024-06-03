@@ -1,6 +1,7 @@
 import { connectMongo } from "@/config/connect-db";
 import { verifyJWT } from "@/helpers/verify-jwt";
 import Lead from "@/models/lead.model";
+import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -81,7 +82,10 @@ export async function GET(req: NextRequest) {
 
     const leads = await Lead.find({
       stage: stageId,
-    }).populate("contactId");
+    }).populate({
+      path: "contactId",
+      model: User,
+    });
 
     return NextResponse.json(
       {

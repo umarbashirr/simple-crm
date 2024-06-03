@@ -1,6 +1,7 @@
 import { connectMongo } from "@/config/connect-db";
 import { verifyJWT } from "@/helpers/verify-jwt";
 import Task from "@/models/task.model";
+import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -83,7 +84,7 @@ export async function GET(req: NextRequest) {
 
     const tasks = await Task.find({
       $or: [{ createdBy: user.id }, { assignedTo: user.id }],
-    }).populate("contactId");
+    }).populate({ path: "contactId", model: User });
 
     return NextResponse.json(
       {
