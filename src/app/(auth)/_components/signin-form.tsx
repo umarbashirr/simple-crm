@@ -1,13 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
 
+import { ButtonLoading } from "@/components/loading-button";
 import TextInput from "@/components/text-input";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -15,6 +17,7 @@ const formSchema = z.object({
 });
 
 const SigninForm = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -26,6 +29,7 @@ const SigninForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      setIsLoading(true);
       const response = await fetch("/api/auth/sign-in", {
         method: "POST",
         body: JSON.stringify(values),
@@ -35,14 +39,25 @@ const SigninForm = () => {
       const data = await response.json();
 
       if (data?.success) {
+        toast({
+          title: "Success",
+          description: data?.message,
+        });
         localStorage.setItem("_ult", data?.data);
         form.reset();
         router.push("/dashboard");
       } else {
         throw new Error(data?.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error?.message,
+      });
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -62,9 +77,9 @@ const SigninForm = () => {
           placeholder="Enter your password"
           type="password"
         />
-        <Button type="submit" className="w-full">
-          Sign in
-        </Button>
+        <ButtonLoading className="w-full" isLoading={isLoading}>
+          {isLoading ? "Please wait..." : "Sign in"}
+        </ButtonLoading>
       </form>
     </Form>
   );

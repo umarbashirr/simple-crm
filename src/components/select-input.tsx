@@ -50,13 +50,17 @@ const SelectInput = ({
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
+                <SelectValue placeholder={placeholder} className="capitalize" />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
               {options.map((el) => {
                 return (
-                  <SelectItem key={el?.value} value={el?.value}>
+                  <SelectItem
+                    className="capitalize"
+                    key={el?.value}
+                    value={el?.value}
+                  >
                     {el?.key}
                   </SelectItem>
                 );

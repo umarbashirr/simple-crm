@@ -1,11 +1,10 @@
 import { cookies } from "next/headers";
-import AddNewContact from "../../_components/contact/add-new-contact";
-import { contactColumns } from "../../_components/contact/contact-columns";
-import { DataTable } from "../../_components/data-table";
+import NewTask from "../../_components/tasks/new-task";
+import TaskContainer from "../../_components/tasks/task-container";
 
 const fetchContact = async () => {
   try {
-    const url = process.env.NEXT_PUBLIC_APP_URL + "/api/contact";
+    const url = process.env.NEXT_PUBLIC_APP_URL + "/api/tasks";
     const response = await fetch(url, {
       method: "GET",
       credentials: "include",
@@ -23,26 +22,19 @@ const fetchContact = async () => {
 };
 
 const Page = async () => {
-  const contacts = await fetchContact();
-
+  const tasks = await fetchContact();
   return (
     <div className="p-6">
       <div className="flex items-end justify-between mb-4">
         <div>
-          <h1 className="font-bold text-xl">Manage Your Contacts</h1>
+          <h1 className="font-bold text-xl">Tasks</h1>
           <p className="text-sm text-muted-foreground">
-            Effortlessly organize, track, and connect with your leads and
-            clients.
+            Manage all your tasks here
           </p>
         </div>
-        <AddNewContact />
+        <NewTask />
       </div>
-      <DataTable
-        columns={contactColumns}
-        data={contacts}
-        filterColumn="email"
-        filterPlaceHolder="Filter by email ..."
-      />
+      <TaskContainer tasks={tasks} />
     </div>
   );
 };

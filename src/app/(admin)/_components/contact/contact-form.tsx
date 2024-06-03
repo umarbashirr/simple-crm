@@ -1,17 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
 
+import SelectInput from "@/components/select-input";
+import TextAreaInput from "@/components/text-area-input";
 import TextInput from "@/components/text-input";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import TextAreaInput from "@/components/text-area-input";
-import SelectInput from "@/components/select-input";
 import { countryList } from "@/utils/countries";
-import { ContactProps } from "./contact-columns";
 
 const formSchema = z.object({
   name: z.string().min(2),
@@ -27,7 +26,7 @@ const formSchema = z.object({
 });
 
 interface ContactFormProps {
-  contact: any;
+  contact?: any;
   type: "edit" | "add" | "view";
 }
 

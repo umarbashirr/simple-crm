@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import {
   Dialog,
   DialogContent,

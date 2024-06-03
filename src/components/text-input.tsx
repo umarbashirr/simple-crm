@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 interface TextInputProps {
   control: any;
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   type: string;
   desc?: string;
@@ -38,9 +38,11 @@ const TextInput = ({
       name={name}
       render={({ field }) => (
         <FormItem className={className}>
-          <FormLabel className={cn("capitalize", labelClass)}>
-            {label}
-          </FormLabel>
+          {label && (
+            <FormLabel className={cn("capitalize", labelClass)}>
+              {label}
+            </FormLabel>
+          )}
           <FormControl>
             <Input placeholder={placeholder} type={type} {...field} />
           </FormControl>

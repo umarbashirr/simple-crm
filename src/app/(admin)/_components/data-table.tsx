@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="-mt-[52px]">
+    <div>
       <div className="flex items-center py-4">
         <Input
           placeholder={filterPlaceHolder}
@@ -83,7 +83,7 @@ export function DataTable<TData, TValue>({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-2">
+            <Button variant="outline" className="ml-auto">
               Columns
             </Button>
           </DropdownMenuTrigger>
@@ -136,7 +136,7 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="whitespace-nowrap">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
